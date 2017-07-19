@@ -11,17 +11,30 @@ use AppBundle\Entity\Task;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/{page}", name="homepage", requirements={"page": "\d+"}, defaults={"page": "1"})
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $page)
     {
+        $offset = ($page-1)*5;
         $em = $this->getDoctrine()->getEntityManager();
         $tasks = $em->getRepository('AppBundle:Task')
-        ->findAll();
+        ->findBy(array(), array('id' => 'ASC'), 5, $offset);
+
+        //finds the last page
+        $queryBuilder = $em->getRepository('AppBundle:Task')->createQueryBuilder('a');
+        $queryBuilder->select('COUNT(a)');
+        $count = $queryBuilder->getQuery()->getSingleScalarResult();
+        $last = ceil($count/5);
+
+        if($page > $last)
+        {
+            return $this->redirect( $this->generateUrl('homepage') );
+        }
+
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            'tasks' => $tasks
+            'tasks' => $tasks, 'page' => $page, 'last' => $last
         ]);
     }
 

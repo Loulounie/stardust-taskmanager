@@ -13,7 +13,7 @@ class TaskController extends Controller
     /**
      * @Route("/task/{id}", name="taskpage", requirements={"id": "\d+"})
      */
-    public function viewAction($id)
+    public function viewAction(Request $request, $id)
     {
     	$em = $this->getDoctrine()->getEntityManager();
 
