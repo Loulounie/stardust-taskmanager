@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for message in app.flashes('notice') %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th style="width:5%">Id</th>
+                <th>Task</th>
+                <th>Completed</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td width="5%">{{ task.id }}</td>
+                    <td width="30%">{{ task.label }}</td>
+                    <td width="10%"><input type="checkbox" {% if task.completed == 1 %} checked {% endif %} disabled></td>
+                    <td width="10%">
+                        <form method="post" action="{{ app.request.baseurl }}/task/complete">
+                            <input type="hidden" name="taskId" value="{{ task.id }}">
+                            <button type="submit" class="btn btn-sm btn-primary" {% if task.completed == 1 %} disabled {% endif %}>Complete</button>
+                        </form>
+                    </td>
+                    <td width="40%">
+                        <form method="post" action="{{ app.request.baseurl }}/delete">
+                            <input type="hidden" name="taskId" value="{{ task.id }}">
+                            <button type="submit" class="btn btn-sm btn-primary" >Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                
+            </tbody>
+          </table>
+        </div>
+      </div>
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
