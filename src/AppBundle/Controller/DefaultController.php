@@ -50,10 +50,27 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $taskId = $request->request->get('label');
+        $taskId = $request->request->get('taskId');
         $task = $this->getDoctrine()->getRepository('AppBundle:Task')->find($taskId);
 
         $em->remove($task);
+        $em->flush();
+
+        return $this->redirect( $this->generateUrl('homepage') );
+    }
+
+    /**
+     * @Route("/complete", name="complete")
+     */
+    public function completeAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $taskId = $request->request->get('taskId');
+        
+        $task = $this->getDoctrine()->getRepository('AppBundle:Task')->find($taskId);
+        $task->setCompleted(True);
+        
         $em->flush();
 
         return $this->redirect( $this->generateUrl('homepage') );

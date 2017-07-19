@@ -27,6 +27,13 @@ class Task
      * @ORM\Column(name="label", type="string", length=255)
      */
     private $label;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="completed", type="boolean")
+     */
+    private $completed = 0;
 
 
     /**
@@ -61,6 +68,30 @@ class Task
     public function getLabel()
     {
         return $this->label;
+    }
+
+    /**
+     * Set completed
+     *
+     * @param boolean $completed
+     *
+     * @return Task
+     */
+    public function setCompleted($completed)
+    {
+        $this->completed = $completed;
+
+        return $this;
+    }
+
+    /**
+     * Get completed
+     *
+     * @return boolean
+     */
+    public function getCompleted()
+    {
+        return $this->completed;
     }
 }
 

@@ -13,17 +13,26 @@
             <tbody>
                 {% for task in tasks %}
                 <tr>
-                    <form method="post" action="{{ app.request.baseurl }}/delete">
-                        <input type="hidden" name="label" value="{{ task.id }}">
-                        <td >{{ task.id }}</td>
-                        <td>{{ task.label }}</td>
-                        <td><button type="submit" class="btn btn-sm btn-primary">Delete</button></td>
-                    </form>
+                    <td width="5%">{{ task.id }}</td>
+                    <td width="30%">{{ task.label }}</td>
+                    <td width="10%"><input type="checkbox" {% if task.completed == 1 %} checked {% endif %} disabled></td>
+                    <td width="10%">
+                        <form method="post" action="{{ app.request.baseurl }}/complete">
+                            <input type="hidden" name="taskId" value="{{ task.id }}">
+                            <button type="submit" class="btn btn-sm btn-primary" {% if task.completed == 1 %} disabled {% endif %}>Complete</button>
+                        </form>
+                    </td>
+                    <td width="40%">
+                        <form method="post" action="{{ app.request.baseurl }}/delete">
+                            <input type="hidden" name="taskId" value="{{ task.id }}">
+                            <button type="submit" class="btn btn-sm btn-primary" >Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
                 <tr>
                     <form method="post" action="{{ app.request.baseurl }}/add">
-                        <td colspan="2">
+                        <td colspan="4">
                             <input type="textbox" name="label" class="small-6 small-center" placeholder="New task description..."> <button type="submit" class="btn btn-sm btn-primary">Add</button>
                         </td>
                     </form>
