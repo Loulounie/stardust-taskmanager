@@ -13,13 +13,14 @@
               <tr>
                 <th style="width:5%">Id</th>
                 <th>Task</th>
+                <th>Completed</th>
               </tr>
             </thead>
             <tbody>
                 {% for task in tasks %}
                 <tr>
                     <td width="5%">{{ task.id }}</td>
-                    <td width="30%">{{ task.label }}</td>
+                    <td width="30%"><a href="/task/{{ task.id }}">{{ task.label }}</a></td>
                     <td width="10%"><input type="checkbox" {% if task.completed == 1 %} checked {% endif %} disabled></td>
                     <td width="10%">
                         <form method="post" action="{{ app.request.baseurl }}/complete">
