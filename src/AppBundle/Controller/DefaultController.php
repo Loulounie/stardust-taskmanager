@@ -40,6 +40,10 @@ class DefaultController extends Controller
         $em->persist($task);
         $em->flush();
 
+        $this->addFlash(
+            'notice',
+            'Task succesfully added!'
+        );
         return $this->redirect( $this->generateUrl('homepage') );
     }
 
@@ -55,7 +59,10 @@ class DefaultController extends Controller
 
         $em->remove($task);
         $em->flush();
-
+        $this->addFlash(
+            'notice',
+            'Task succesfully deleted!'
+        );
         return $this->redirect( $this->generateUrl('homepage') );
     }
 
@@ -72,7 +79,10 @@ class DefaultController extends Controller
         $task->setCompleted(True);
         
         $em->flush();
-
+        $this->addFlash(
+            'notice',
+            'Task succesfully completed!'
+        );
         return $this->redirect( $this->generateUrl('homepage') );
     }
 }

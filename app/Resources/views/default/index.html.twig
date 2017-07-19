@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for message in app.flashes('notice') %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="row">
         <div class="col-md-12">
           <table class="table table-striped">
