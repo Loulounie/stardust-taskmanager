@@ -33,7 +33,7 @@
                 <tr>
                     <form method="post" action="{{ app.request.baseurl }}/add">
                         <td colspan="4">
-                            <input type="textbox" name="label" class="small-6 small-center" placeholder="New task description..."> <button type="submit" class="btn btn-sm btn-primary">Add</button>
+                            <input type="textbox" name="label" class="small-6 small-center" placeholder="New task description..." oninput="checkVoid(this)" > <button type="submit" class="btn btn-sm btn-primary" id="addButton" disabled>Add</button>
                         </td>
                     </form>
                 </tr>
