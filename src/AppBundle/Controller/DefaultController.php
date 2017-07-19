@@ -42,4 +42,20 @@ class DefaultController extends Controller
 
         return $this->redirect( $this->generateUrl('homepage') );
     }
+
+    /**
+     * @Route("/delete", name="delete")
+     */
+    public function deleteAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $taskId = $request->request->get('label');
+        $task = $this->getDoctrine()->getRepository('AppBundle:Task')->find($taskId);
+
+        $em->remove($task);
+        $em->flush();
+
+        return $this->redirect( $this->generateUrl('homepage') );
+    }
 }
